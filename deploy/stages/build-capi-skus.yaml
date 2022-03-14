@@ -8,7 +8,7 @@ parameters:
     type: string
 
 stages:
-  - stage: $(OS)-$(OS_VERSION)-${{ replace(parameters.KUBERNETES_VERSION, '.', '-') }}-vhd
+  - stage: ${{ parameters.OS }}-${{ parameters.OS_VERSION }}-${{ replace(parameters.KUBERNETES_VERSION, '.', '-') }}-vhd
     jobs:
     - template: /images/capi/packer/azure/.pipelines/build-vhd.yaml
     variables:
@@ -20,7 +20,7 @@ stages:
       OS: ${{ parameters.OS }}
       OS_VERSION: ${{ parameters.OS_VERSION }}
 
-  - stage: $(OS)-$(OS_VERSION)-${{ replace(parameters.KUBERNETES_VERSION, '.', '-') }}-sku
+  - stage: ${{ parameters.OS }}-${{ parameters.OS_VERSION }}-${{ replace(parameters.KUBERNETES_VERSION, '.', '-') }}-sku
     condition: and(succeeded(), eq(variables.CLEANUP, 'False'))
     jobs:
     - template: /images/capi/packer/azure/.pipelines/create-sku.yaml
@@ -32,7 +32,7 @@ stages:
       OS: ${{ parameters.OS }}
       OS_VERSION: ${{ parameters.OS_VERSION }}
 
-  - stage: $(OS)-$(OS_VERSION)-${{ replace(parameters.KUBERNETES_VERSION, '.', '-') }}-disk_version
+  - stage: ${{ parameters.OS }}-${{ parameters.OS_VERSION }}-${{ replace(parameters.KUBERNETES_VERSION, '.', '-') }}-disk_version
     condition: and(succeeded(), eq(variables.CLEANUP, 'False'))
     jobs:
     - template: /images/capi/packer/azure/.pipelines/create-disk-version.yaml
