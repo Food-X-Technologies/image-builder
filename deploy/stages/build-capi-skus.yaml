@@ -1,6 +1,3 @@
-trigger: none
-pr: none
-
 # Required pipeline variables
 parameters:
   - name: BUILD_POOL # Azure DevOps build pool to use
