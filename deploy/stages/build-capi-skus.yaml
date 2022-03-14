@@ -9,7 +9,7 @@ parameters:
 
   - name: STAGE_PREFIX
     type: string
-    defaultValue: $(OS)-$(OS_VERSION)-${{ replace(parameters.KUBERNETES_VERSION, '.', '-') }}
+    default: $(OS)-$(OS_VERSION)-${{ replace(parameters.KUBERNETES_VERSION, '.', '-') }}
 
 stages:
   - stage: ${{ parameters.STAGE_PREFIX }}-vhd
