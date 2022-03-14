@@ -10,7 +10,7 @@ parameters:
     type: object
     default:
       - name: ubuntu-2004
-        k8sVersion:
+        k8sVersion: "1.23.4"
         os: Ubuntu
         osVersion: 2004
 
@@ -20,13 +20,13 @@ stages:
         variables:
           BUILD_POOL: Kubernetes Pool
           CONTAINER_IMAGE: "loclcorp.azurecr.io/image-builder:foodx-v0.1.11" # Dev container image URL to use. Should have Azure CLI, Packer and Ansible.
-          AZURE_TENANT_ID_VHD: ${{ variables.tenant-id }} # tenant ID to build the vhd
-          AZURE_CLIENT_ID_VHD: ${{ variables.acr-serviceprincipal-id }} # Service principal ID to build the vhd
-          AZURE_CLIENT_SECRET_VHD: ${{ variables.acr-serviceprincipal-password }} # Service principal secret to build the vhd
-          AZURE_SUBSCRIPTION_ID_VHD: ${{ variables.subscription-id-corp-locl-prd }} # Subscription ID to build the vhd
-          AZURE_TENANT_ID_SKU: ${{ variables.tenant-id }} # tenant ID to PUT the SKU
-          AZURE_CLIENT_ID_SKU: ${{ variables.acr-serviceprincipal-id }} # Service principal ID to PUT the SKU
-          AZURE_CLIENT_SECRET_SKU: ${{ variables.acr-serviceprincipal-password }} # Service principal secret to PUT the SKU
+          AZURE_TENANT_ID_VHD: $( tenant-id ) # tenant ID to build the vhd
+          AZURE_CLIENT_ID_VHD: $( acr-serviceprincipal-id ) # Service principal ID to build the vhd
+          AZURE_CLIENT_SECRET_VHD: $( acr-serviceprincipal-password ) # Service principal secret to build the vhd
+          AZURE_SUBSCRIPTION_ID_VHD: $( subscription-id-corp-locl-prd ) # Subscription ID to build the vhd
+          AZURE_TENANT_ID_SKU: $( tenant-id ) # tenant ID to PUT the SKU
+          AZURE_CLIENT_ID_SKU: $( acr-serviceprincipal-id ) # Service principal ID to PUT the SKU
+          AZURE_CLIENT_SECRET_SKU: $( acr-serviceprincipal-password ) # Service principal secret to PUT the SKU
           PUBLISHER: foodx-technologies # the name of the publisher to create the sku for
           OFFER: capi # the name of the offer to create the sku for
           SKU_TEMPLATE_FILE: /images/capi/packer/azure/sku-template.json # the base template file to use for the sku
