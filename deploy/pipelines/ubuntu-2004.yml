@@ -6,6 +6,31 @@ pool: Kubernetes Pool
 variables:
   - group: cluster-api-image-builder-variables
 
+  - name: BUILD_POOL
+    value: Kubernetes Pool
+  - name: CONTAINER_IMAGE
+    value: "loclcorp.azurecr.io/image-builder:foodx-v0.1.11" # Dev container image URL to use. Should have Azure CLI, Packer and Ansible.
+  - name: AZURE_TENANT_ID_VHD
+    value: $( tenant-id ) # tenant ID to build the vhd
+  - name: AZURE_CLIENT_ID_VHD
+    value: $( acr-serviceprincipal-id ) # Service principal ID to build the vhd
+  - name: AZURE_CLIENT_SECRET_VHD
+    value: $( acr-serviceprincipal-password ) # Service principal secret to build the vhd
+  - name: AZURE_SUBSCRIPTION_ID_VHD
+    value: $( subscription-id-corp-locl-prd ) # Subscription ID to build the vhd
+  - name: AZURE_TENANT_ID_SKU
+    value: $( tenant-id ) # tenant ID to PUT the SKU
+  - name: AZURE_CLIENT_ID_SKU
+    value: $( acr-serviceprincipal-id ) # Service principal ID to PUT the SKU
+  - name: AZURE_CLIENT_SECRET_SKU
+    value: $( acr-serviceprincipal-password ) # Service principal secret to PUT the SKU
+  - name: PUBLISHER
+    value: foodx-technologies # the name of the publisher to create the sku for
+  - name: OFFER
+    value: capi # the name of the offer to create the sku for
+  - name: SKU_TEMPLATE_FILE
+    value: /images/capi/packer/azure/sku-template.json # the base template file to use for the sku
+
 parameters:
   - name: imagesToBuild
     type: object
@@ -19,18 +44,6 @@ stages:
   - ${{ each build in parameters.imagesToBuild }}:
       - template: /deploy/stages/build-capi-skus.yaml
         parameters:
-          BUILD_POOL: Kubernetes Pool
-          CONTAINER_IMAGE: "loclcorp.azurecr.io/image-builder:foodx-v0.1.11" # Dev container image URL to use. Should have Azure CLI, Packer and Ansible.
-          AZURE_TENANT_ID_VHD: $( tenant-id ) # tenant ID to build the vhd
-          AZURE_CLIENT_ID_VHD: $( acr-serviceprincipal-id ) # Service principal ID to build the vhd
-          AZURE_CLIENT_SECRET_VHD: $( acr-serviceprincipal-password ) # Service principal secret to build the vhd
-          AZURE_SUBSCRIPTION_ID_VHD: $( subscription-id-corp-locl-prd ) # Subscription ID to build the vhd
-          AZURE_TENANT_ID_SKU: $( tenant-id ) # tenant ID to PUT the SKU
-          AZURE_CLIENT_ID_SKU: $( acr-serviceprincipal-id ) # Service principal ID to PUT the SKU
-          AZURE_CLIENT_SECRET_SKU: $( acr-serviceprincipal-password ) # Service principal secret to PUT the SKU
-          PUBLISHER: foodx-technologies # the name of the publisher to create the sku for
-          OFFER: capi # the name of the offer to create the sku for
-          SKU_TEMPLATE_FILE: /images/capi/packer/azure/sku-template.json # the base template file to use for the sku
           KUBERNETES_VERSION: ${{ build.k8sVersion }}
           OS: ${{ build.os }}
           OS_VERSION: ${{ build.osVersion }}
