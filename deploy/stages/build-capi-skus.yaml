@@ -7,12 +7,8 @@ parameters:
   - name: OS_VERSION # target of build e.g. `18.04/2004/2019`
     type: string
 
-  - name: STAGE_PREFIX
-    type: string
-    default: $(OS)-$(OS_VERSION)-${{ replace(parameters.KUBERNETES_VERSION, '.', '-') }}
-
 stages:
-  - stage: ${{ parameters.STAGE_PREFIX }}-vhd
+  - stage: $(OS)-$(OS_VERSION)-${{ replace(parameters.KUBERNETES_VERSION, '.', '-') }}-vhd
     jobs:
     - template: /images/capi/packer/azure/.pipelines/build-vhd.yaml
     variables:
@@ -24,7 +20,7 @@ stages:
       OS: ${{ parameters.OS }}
       OS_VERSION: ${{ parameters.OS_VERSION }}
 
-  - stage: ${{ parameters.STAGE_PREFIX }}-sku
+  - stage: $(OS)-$(OS_VERSION)-${{ replace(parameters.KUBERNETES_VERSION, '.', '-') }}-sku
     condition: and(succeeded(), eq(variables.CLEANUP, 'False'))
     jobs:
     - template: /images/capi/packer/azure/.pipelines/create-sku.yaml
@@ -36,7 +32,7 @@ stages:
       OS: ${{ parameters.OS }}
       OS_VERSION: ${{ parameters.OS_VERSION }}
 
-  - stage: ${{ parameters.STAGE_PREFIX }}-disk_version
+  - stage: $(OS)-$(OS_VERSION)-${{ replace(parameters.KUBERNETES_VERSION, '.', '-') }}-disk_version
     condition: and(succeeded(), eq(variables.CLEANUP, 'False'))
     jobs:
     - template: /images/capi/packer/azure/.pipelines/create-disk-version.yaml
