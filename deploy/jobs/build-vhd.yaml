@@ -13,7 +13,7 @@ jobs:
 - job: build_vhd
   container:
     image: $[ variables['CONTAINER_IMAGE'] ]
-    endpoint: ${{ variables.containerRegistry }}
+    endpoint: acr-corp_locl_prd-loclcorp
   timeoutInMinutes: 120
   strategy:
     maxParallel: 0
