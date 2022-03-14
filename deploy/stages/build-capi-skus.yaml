@@ -22,7 +22,7 @@ stages:
       OS_VERSION: ${{ parameters.OS_VERSION }}
 
   - stage: ${{ parameters.OS }}_${{ parameters.OS_VERSION }}_${{ replace(parameters.KUBERNETES_VERSION, '.', '-') }}_sku
-    displayName: ${{ parameters.OS }} ${{ parameters.OS_VERSION }} K8s v${{ parameters.KUBERNETES_VERSION} - SKU
+    displayName: ${{ parameters.OS }} ${{ parameters.OS_VERSION }} K8s v${{ parameters.KUBERNETES_VERSION}} - SKU
     condition: and(succeeded(), eq(variables.CLEANUP, 'False'))
     jobs:
     - template: /images/capi/packer/azure/.pipelines/create-sku.yaml
@@ -35,7 +35,7 @@ stages:
       OS_VERSION: ${{ parameters.OS_VERSION }}
 
   - stage: ${{ parameters.OS }}_${{ parameters.OS_VERSION }}_${{ replace(parameters.KUBERNETES_VERSION, '.', '-') }}_disk_version
-    displayName: ${{ parameters.OS }} ${{ parameters.OS_VERSION }} K8s v${{ parameters.KUBERNETES_VERSION} - Disk Version
+    displayName: ${{ parameters.OS }} ${{ parameters.OS_VERSION }} K8s v${{ parameters.KUBERNETES_VERSION}} - Disk Version
     condition: and(succeeded(), eq(variables.CLEANUP, 'False'))
     jobs:
     - template: /images/capi/packer/azure/.pipelines/create-disk-version.yaml
