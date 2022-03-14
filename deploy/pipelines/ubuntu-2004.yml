@@ -17,7 +17,7 @@ parameters:
 
 stages:
   - ${{ each build in parameters.imagesToBuild }}:
-      - template: deploy/stages/build-capi-skus.yaml
+      - template: /deploy/stages/build-capi-skus.yaml
         parameters:
           BUILD_POOL: Kubernetes Pool
           CONTAINER_IMAGE: "loclcorp.azurecr.io/image-builder:foodx-v0.1.11" # Dev container image URL to use. Should have Azure CLI, Packer and Ansible.
