@@ -1,4 +1,5 @@
 trigger: none
+pr: none
 
 pool: Kubernetes Pool
 
@@ -16,8 +17,8 @@ parameters:
 
 stages:
   - ${{ each build in parameters.imagesToBuild }}:
-      - template: /images/capi/packer/azure/.pipelines/stages.yaml
-        variables:
+      - template: deploy/stages/build-capi-skus.yaml
+        parameters:
           BUILD_POOL: Kubernetes Pool
           CONTAINER_IMAGE: "loclcorp.azurecr.io/image-builder:foodx-v0.1.11" # Dev container image URL to use. Should have Azure CLI, Packer and Ansible.
           AZURE_TENANT_ID_VHD: $( tenant-id ) # tenant ID to build the vhd
@@ -30,7 +31,6 @@ stages:
           PUBLISHER: foodx-technologies # the name of the publisher to create the sku for
           OFFER: capi # the name of the offer to create the sku for
           SKU_TEMPLATE_FILE: /images/capi/packer/azure/sku-template.json # the base template file to use for the sku
-
           KUBERNETES_VERSION: ${{ build.k8sVersion }}
           OS: ${{ build.os }}
           OS_VERSION: ${{ build.osVersion }}
