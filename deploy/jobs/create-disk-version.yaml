@@ -12,7 +12,7 @@ jobs:
 
   container:
     image: $[ variables['CONTAINER_IMAGE'] ]
-    endpoint: acr-corp_locl_prd-loclcorp
+    endpoint: $(containerRegistry)
 
   timeoutInMinutes: 120
   strategy:
