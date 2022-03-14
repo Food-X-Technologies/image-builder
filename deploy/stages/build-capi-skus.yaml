@@ -11,7 +11,7 @@ stages:
   - stage: ${{ parameters.OS }}_${{ parameters.OS_VERSION }}_${{ replace(parameters.KUBERNETES_VERSION, '.', '_') }}_vhd
     displayName: ${{ parameters.OS }} ${{ parameters.OS_VERSION }} K8s v${{ parameters.KUBERNETES_VERSION }} - VHD
     jobs:
-    - template: /images/capi/packer/azure/.pipelines/build-vhd.yaml
+    - template: /deploy/jobs/build-vhd.yaml
     variables:
       AZURE_TENANT_ID: $(AZURE_TENANT_ID_VHD)
       AZURE_CLIENT_ID: $(AZURE_CLIENT_ID_VHD)
@@ -25,7 +25,7 @@ stages:
     displayName: ${{ parameters.OS }} ${{ parameters.OS_VERSION }} K8s v${{ parameters.KUBERNETES_VERSION}} - SKU
     condition: and(succeeded(), eq(variables.CLEANUP, 'False'))
     jobs:
-    - template: /images/capi/packer/azure/.pipelines/create-sku.yaml
+    - template: /deploy/jobs/create-sku.yaml
     variables:
       AZURE_TENANT_ID: $(AZURE_TENANT_ID_SKU)
       AZURE_CLIENT_ID: $(AZURE_CLIENT_ID_SKU)
@@ -38,7 +38,7 @@ stages:
     displayName: ${{ parameters.OS }} ${{ parameters.OS_VERSION }} K8s v${{ parameters.KUBERNETES_VERSION}} - Disk Version
     condition: and(succeeded(), eq(variables.CLEANUP, 'False'))
     jobs:
-    - template: /images/capi/packer/azure/.pipelines/create-disk-version.yaml
+    - template: /deploy/jobs/create-disk-version.yaml
     variables:
       AZURE_TENANT_ID: $(AZURE_TENANT_ID_SKU)
       AZURE_CLIENT_ID: $(AZURE_CLIENT_ID_SKU)
