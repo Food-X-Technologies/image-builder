@@ -21,7 +21,7 @@ stages:
       OS: ${{ parameters.OS }}
       OS_VERSION: ${{ parameters.OS_VERSION }}
 
-  - stage: ${{ parameters.OS }}_${{ parameters.OS_VERSION }}_${{ replace(parameters.KUBERNETES_VERSION, '.', '-') }}_sku
+  - stage: ${{ parameters.OS }}_${{ parameters.OS_VERSION }}_${{ replace(parameters.KUBERNETES_VERSION, '.', '_') }}_sku
     displayName: ${{ parameters.OS }} ${{ parameters.OS_VERSION }} K8s v${{ parameters.KUBERNETES_VERSION}} - SKU
     condition: and(succeeded(), eq(variables.CLEANUP, 'False'))
     jobs:
@@ -34,7 +34,7 @@ stages:
       OS: ${{ parameters.OS }}
       OS_VERSION: ${{ parameters.OS_VERSION }}
 
-  - stage: ${{ parameters.OS }}_${{ parameters.OS_VERSION }}_${{ replace(parameters.KUBERNETES_VERSION, '.', '-') }}_disk_version
+  - stage: ${{ parameters.OS }}_${{ parameters.OS_VERSION }}_${{ replace(parameters.KUBERNETES_VERSION, '.', '_') }}_disk_version
     displayName: ${{ parameters.OS }} ${{ parameters.OS_VERSION }} K8s v${{ parameters.KUBERNETES_VERSION}} - Disk Version
     condition: and(succeeded(), eq(variables.CLEANUP, 'False'))
     jobs:
