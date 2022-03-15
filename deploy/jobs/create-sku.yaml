@@ -18,6 +18,7 @@ jobs:
     image: $[ variables['CONTAINER_IMAGE'] ]
     # Azure DevOps does not support variable expanding in 2022 for container jobs
     endpoint: acr-corp_locl_prd-loclcorp
+    options: --entrypoint bash
 
   timeoutInMinutes: 120
   strategy:
